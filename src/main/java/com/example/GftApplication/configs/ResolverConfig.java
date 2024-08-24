@@ -1,4 +1,4 @@
-package com.example.GftApplication.configs.security;
+package com.example.GftApplication.configs;
 
 
 import net.kaczmarzyk.spring.data.jpa.web.SpecificationArgumentResolver;

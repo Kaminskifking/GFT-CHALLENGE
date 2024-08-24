@@ -29,7 +29,7 @@ public class CustomerController {
 
     private CustomerService customerService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Object> create(@Valid @RequestBody final CustomerCreateDTO customerController) throws UniqueConstraintViolationException {
         customerService.create(customerController);
         return ResponseEntity.status(HttpStatus.CREATED).build();
