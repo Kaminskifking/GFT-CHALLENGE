@@ -1,4 +1,4 @@
-package com.example.GftApplication.dtos;
+package com.example.GftApplication.dtos.Customer;
 
 import com.example.GftApplication.annotation.ValidPassword;
 import jakarta.validation.constraints.NotNull;

@@ -1,15 +1,15 @@
 package com.example.GftApplication.services.impl;
 
 import com.example.GftApplication.annotation.DocumentValidator;
-import com.example.GftApplication.dtos.CustomerCreateDTO;
+import com.example.GftApplication.dtos.Customer.CustomerCreateDTO;
 import com.example.GftApplication.dtos.CustomerReadDTO;
 import com.example.GftApplication.dtos.CustomerUpdateDTO;
-import com.example.GftApplication.exceptions.UniqueConstraintViolationException;
+import com.example.GftApplication.exceptions.customs.NotFoundException;
+import com.example.GftApplication.exceptions.customs.UniqueConstraintViolationException;
 import com.example.GftApplication.mappers.CustomerMapper;
 import com.example.GftApplication.repositories.CustomerRepository;
 import com.example.GftApplication.services.CustomerService;
 import com.example.GftApplication.entities.Customer;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -32,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final DocumentValidator documentValidator;
 
     @Override
-    public void create(CustomerCreateDTO customerCreateDto) throws UniqueConstraintViolationException {
+    public void create(CustomerCreateDTO customerCreateDto) throws UniqueConstraintViolationException, IllegalArgumentException {
 
         if (customerRepository.existsByDocument(String.valueOf(customerCreateDto.document()))) {
             throw new UniqueConstraintViolationException("A customer with the same document already exists.");
@@ -52,8 +54,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerReadDTO findById(Long id) throws EntityNotFoundException {
-        final var customer = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+    public List<CustomerReadDTO> findAll() {
+        return   customerRepository.findAll()
+                .stream()
+                .map(customerMapper::customerToCustomerReadDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CustomerReadDTO findById(Long id) throws NotFoundException {
+        final var customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
 
         return customerMapper.customerToCustomerReadDTO(customer);
     }
@@ -65,9 +75,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(Long id, CustomerUpdateDTO customerUpdateDTO) {
+    public void updateCustomer(Long id, CustomerUpdateDTO customerUpdateDTO) throws NotFoundException {
         final var customerForUpdate = customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+                .orElseThrow(() -> new NotFoundException("Customer not found"));
 
         customerMapper.updateCustomerFromDto(customerUpdateDTO, customerForUpdate);
 
@@ -79,9 +89,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void softDelete(Long id) throws EntityNotFoundException {
+    public void softDelete(Long id) throws NotFoundException {
         final var customer = customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+                .orElseThrow(() -> new NotFoundException("Customer not found"));
 
         customer.setDeletedAt(LocalDateTime.now());
         customerRepository.save(customer);
