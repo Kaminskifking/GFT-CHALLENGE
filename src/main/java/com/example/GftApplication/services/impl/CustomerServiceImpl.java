@@ -2,8 +2,8 @@ package com.example.GftApplication.services.impl;
 
 import com.example.GftApplication.annotation.DocumentValidator;
 import com.example.GftApplication.dtos.Customer.CustomerCreateDTO;
-import com.example.GftApplication.dtos.CustomerReadDTO;
-import com.example.GftApplication.dtos.CustomerUpdateDTO;
+import com.example.GftApplication.dtos.Customer.CustomerReadDTO;
+import com.example.GftApplication.dtos.Customer.CustomerUpdateDTO;
 import com.example.GftApplication.exceptions.customs.NotFoundException;
 import com.example.GftApplication.exceptions.customs.UniqueConstraintViolationException;
 import com.example.GftApplication.mappers.CustomerMapper;
@@ -96,5 +96,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setDeletedAt(LocalDateTime.now());
         customerRepository.save(customer);
     }
+
 
 }

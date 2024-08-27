@@ -1,7 +1,7 @@
 package com.example.GftApplication.mappers;
 
-import com.example.GftApplication.dtos.CustomerReadDTO;
-import com.example.GftApplication.dtos.CustomerUpdateDTO;
+import com.example.GftApplication.dtos.Customer.CustomerReadDTO;
+import com.example.GftApplication.dtos.Customer.CustomerUpdateDTO;
 import com.example.GftApplication.entities.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

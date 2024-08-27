@@ -1,9 +1,9 @@
-package com.example.GftApplication.dtos;
+package com.example.GftApplication.dtos.Customer;
 
 public record CustomerReadDTO(
         Long id,
         String name,
-        Long document,
+        String document,
         String address
 ) {
 }

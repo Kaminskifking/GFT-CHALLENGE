@@ -1,8 +1,8 @@
 package com.example.GftApplication.controllers;
 
 import com.example.GftApplication.dtos.Customer.CustomerCreateDTO;
-import com.example.GftApplication.dtos.CustomerReadDTO;
-import com.example.GftApplication.dtos.CustomerUpdateDTO;
+import com.example.GftApplication.dtos.Customer.CustomerReadDTO;
+import com.example.GftApplication.dtos.Customer.CustomerUpdateDTO;
 import com.example.GftApplication.entities.Customer;
 import com.example.GftApplication.exceptions.customs.NotFoundException;
 import com.example.GftApplication.exceptions.customs.UniqueConstraintViolationException;
