@@ -1,7 +1,7 @@
 package com.example.GftApplication.controllers;
 
 import com.example.GftApplication.configs.security.UserDetailsImpl;
-import com.example.GftApplication.dtos.Payment.PaymentDTO;
+import com.example.GftApplication.dtos.Payment.PaymentCreateDTO;
 import com.example.GftApplication.dtos.Payment.PaymentReadDTO;
 import com.example.GftApplication.entities.Payment;
 import com.example.GftApplication.exceptions.customs.BadRequestExceptions;
@@ -30,9 +30,9 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/{id}")
-    public ResponseEntity<Object> create(@PathVariable("id") final Long id, @Valid @RequestBody final PaymentDTO paymentDTO, Authentication authentication) throws BadRequestExceptions, NotFoundException {
+    public ResponseEntity<Object> create(@PathVariable("id") final Long id, @Valid @RequestBody final PaymentCreateDTO paymentCreateDTO, Authentication authentication) throws BadRequestExceptions, NotFoundException {
         var customerDocument = ((UserDetailsImpl) authentication.getPrincipal()).getDocument();
-        paymentService.create(id, paymentDTO, customerDocument);
+        paymentService.create(id, paymentCreateDTO, customerDocument);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

@@ -1,4 +1,4 @@
-package com.example.GftApplication.annotation;
+package com.example.GftApplication.utils;
 
 import br.com.caelum.stella.validation.CNPJValidator;
 import br.com.caelum.stella.validation.CPFValidator;

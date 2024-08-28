@@ -25,8 +25,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public void create(Account accountPayer, Account accountRecipient, Double amount, Payment payment) {
-        String urlTransferCompleted = "https://run.mocky.io/v3/4652ac3f-b0bd-4461-9b8a-005e9a2e6250";
-        String urlTransferReceived = "https://run.mocky.io/v3/180d48c2-279b-468a-9502-de1a05cccc92";
+        String urlTransferCompleted = "https://run.mocky.io/v3/a7720747-5c4c-41b6-958c-5abaf03fee26";
+        String urlTransferReceived = "https://run.mocky.io/v3/3ddd26a8-0ddf-476e-8678-a7adfa0fd59d";
 
         ResponseEntity<NotificationExternalApiDTO> responseTransferCompleted = restTemplate.getForEntity(urlTransferCompleted, NotificationExternalApiDTO.class);
         ResponseEntity<NotificationExternalApiDTO> responseTransferReceived = restTemplate.getForEntity(urlTransferReceived, NotificationExternalApiDTO.class);

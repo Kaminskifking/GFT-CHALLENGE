@@ -1,9 +1,8 @@
 package com.example.GftApplication.services.impl;
 
-import com.example.GftApplication.dtos.Payment.PaymentDTO;
+import com.example.GftApplication.dtos.Payment.PaymentCreateDTO;
 import com.example.GftApplication.dtos.Payment.PaymentReadDTO;
 import com.example.GftApplication.entities.Account;
-import com.example.GftApplication.entities.Customer;
 import com.example.GftApplication.entities.Payment;
 import com.example.GftApplication.enums.AccountStatus;
 import com.example.GftApplication.exceptions.customs.BadRequestExceptions;
@@ -35,12 +34,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public void create(Long accountId, PaymentDTO paymentDTO, String customerDocument) throws BadRequestExceptions, NotFoundException {
+    public void create(Long accountId, PaymentCreateDTO paymentCreateDTO, String customerDocument) throws BadRequestExceptions, NotFoundException {
         Account accountPayer = accountRepository.findByAccountIdAndCustomerDocument(accountId, customerDocument)
                 .orElseThrow(() -> new NotFoundException("Account not found for account ID: " + accountId + " and customer document: " + customerDocument));
 
 
-        Account accountRecipient = accountRepository.findByAccountIdAndCustomerDocument(paymentDTO.idAccountRecipient(), paymentDTO.documentRecipient())
+        Account accountRecipient = accountRepository.findByAccountIdAndCustomerDocument(paymentCreateDTO.idAccountRecipient(), paymentCreateDTO.documentRecipient())
                 .orElseThrow(() -> new NotFoundException("Account not found for account ID: " + accountId + " and customer document: " + customerDocument));
 
 
@@ -48,25 +47,25 @@ public class PaymentServiceImpl implements PaymentService {
             throw new BadRequestExceptions("Your or the recipient's account is inactive, contact bank support");
         }
 
-        if (accountPayer.getBalance() < paymentDTO.balanceTransfer()) {
+        if (accountPayer.getBalance() < paymentCreateDTO.balanceTransfer()) {
             throw new BadRequestExceptions("You do not have enough balance for this transfer");
         }
 
         Payment payment = Payment.builder()
                 .accountPayer(accountPayer)
                 .accountRecipient(accountRecipient)
-                .transferValue(paymentDTO.balanceTransfer())
+                .transferValue(paymentCreateDTO.balanceTransfer())
                 .build();
 
-        accountPayer.setBalance(accountPayer.getBalance() - paymentDTO.balanceTransfer());
-        accountRecipient.setBalance(accountRecipient.getBalance() + paymentDTO.balanceTransfer());
+        accountPayer.setBalance(accountPayer.getBalance() - paymentCreateDTO.balanceTransfer());
+        accountRecipient.setBalance(accountRecipient.getBalance() + paymentCreateDTO.balanceTransfer());
 
         accountRepository.save(accountPayer);
         accountRepository.save(accountRecipient);
         paymentRepository.save(payment);
 
         try {
-            notificationService.create(accountPayer, accountRecipient, paymentDTO.balanceTransfer(), payment);
+            notificationService.create(accountPayer, accountRecipient, paymentCreateDTO.balanceTransfer(), payment);
         } catch (BadRequestExceptions exceptions) {
             throw new BadRequestExceptions("Creation error in external api for notification");
         }

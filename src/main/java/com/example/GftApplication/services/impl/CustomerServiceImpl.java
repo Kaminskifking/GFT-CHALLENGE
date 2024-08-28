@@ -1,6 +1,6 @@
 package com.example.GftApplication.services.impl;
 
-import com.example.GftApplication.annotation.DocumentValidator;
+import com.example.GftApplication.utils.DocumentValidator;
 import com.example.GftApplication.dtos.Customer.CustomerCreateDTO;
 import com.example.GftApplication.dtos.Customer.CustomerReadDTO;
 import com.example.GftApplication.dtos.Customer.CustomerUpdateDTO;

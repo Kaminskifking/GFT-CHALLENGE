@@ -3,7 +3,7 @@ package com.example.GftApplication.dtos.Payment;
 import jakarta.validation.constraints.NotNull;
 
 
-public record PaymentDTO(
+public record PaymentCreateDTO(
         @NotNull
         String documentRecipient,
         @NotNull

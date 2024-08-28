@@ -1,6 +1,6 @@
 package com.example.GftApplication.services;
 
-import com.example.GftApplication.dtos.Payment.PaymentDTO;
+import com.example.GftApplication.dtos.Payment.PaymentCreateDTO;
 import com.example.GftApplication.dtos.Payment.PaymentReadDTO;
 import com.example.GftApplication.entities.Payment;
 import com.example.GftApplication.exceptions.customs.BadRequestExceptions;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface PaymentService {
 
-    void create(Long accountId, PaymentDTO paymentDTO, String customerDocument) throws BadRequestExceptions, NotFoundException;
+    void create(Long accountId, PaymentCreateDTO paymentCreateDTO, String customerDocument) throws BadRequestExceptions, NotFoundException;
 
     List<PaymentReadDTO> findAll();
 

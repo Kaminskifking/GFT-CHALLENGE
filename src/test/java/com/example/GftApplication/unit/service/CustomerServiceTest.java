@@ -1,6 +1,6 @@
 package com.example.GftApplication.unit.service;
 
-import com.example.GftApplication.annotation.DocumentValidator;
+import com.example.GftApplication.utils.DocumentValidator;
 import com.example.GftApplication.dtos.Customer.CustomerCreateDTO;
 import com.example.GftApplication.dtos.Customer.CustomerReadDTO;
 import com.example.GftApplication.dtos.Customer.CustomerUpdateDTO;
@@ -114,17 +114,17 @@ public class CustomerServiceTest {
         Specification<Customer> spec = (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
         Pageable pageable = PageRequest.of(0, 10);
 
-        List<Customer> fakeUsers = new ArrayList<>();
+        List<Customer> fakeCustomers = new ArrayList<>();
 
-        Page<Customer> fakeUserPage = new PageImpl<>(fakeUsers, pageable, 0);
+        Page<Customer> fakeCustomersPage = new PageImpl<>(fakeCustomers, pageable, 0);
 
-        when(customerRepositoryMock.findAll(spec, pageable)).thenReturn(fakeUserPage);
+        when(customerRepositoryMock.findAll(spec, pageable)).thenReturn(fakeCustomersPage);
 
         Page<CustomerReadDTO> result = this.sut.getPagedFiltered(spec, pageable);
 
         verify(customerRepositoryMock).findAll(spec, pageable);
 
-        assertEquals(fakeUserPage.map(customerMapperMock::customerToCustomerReadDTO), result);
+        assertEquals(fakeCustomersPage.map(customerMapperMock::customerToCustomerReadDTO), result);
     }
 
     @Test
