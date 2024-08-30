@@ -4,7 +4,7 @@ Esta API foi desenvolvida para gerenciar o cadastro de clientes e suas respectiv
 
 As contas criadas através da API suportam operações financeiras, como pagamentos entre contas. Essas operações realizam débitos (saídas) na conta do pagador e créditos (entradas) na conta do recebedor, facilitando a movimentação de saldos de forma segura e eficiente.
 
-# ⚙ Used Technologies ⚙
+# ⚙ Tecnologias Utilizadas ⚙
 Java version 17
 
 Spring Boot Version (3.3.0)
@@ -25,4 +25,6 @@ JWT tokens
 
 🛠 Work With Maven(software project management)
 
+# Documentação da API REST (Resources and Endpoints)
+https://documenter.getpostman.com/view/25624093/2sAXjKaCEk#18b6fbc1-4271-4748-be65-87fba71bd433
 
